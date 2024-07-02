@@ -13,9 +13,6 @@ monggose.connect(DB).then(() => {
 
 //  Server Start
 const port = process.env.PORT;
-app.get('/', (req, res) => {
-    res.send('welcome');
-});
 
 app.listen(port, () => {
     console.log(`app running on port ${port}`);
