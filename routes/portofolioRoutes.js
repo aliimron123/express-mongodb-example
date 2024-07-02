@@ -1,34 +1,29 @@
 const express = require('express');
-const { signUpUser, loginUser } = require('../controllers/authController');
-const userController = require('../controllers/userController');
+const portofolioController = require('../controllers/portofolioController');
 const protectedRoute = require('../controllers/partials/protectedController');
 const router = express.Router();
 
-// auth
-router.route('/signup').post(signUpUser);
-router.route('/login').post(loginUser);
-
-// product
+// router.param('id', portofolioController.chekcId);
 router
     .route('/')
-    .get(userController.getAllUser)
-    .post(userController.createUser);
-router
-    .route('/:id')
-    .get(
+    .get(portofolioController.getPortofolio)
+    .post(
         protectedRoute.protected,
         protectedRoute.protectRoleby('authorityAdmin'),
-        userController.getUser
-    )
+        portofolioController.createPortofolio
+    );
+router
+    .route('/:id')
     .patch(
         protectedRoute.protected,
         protectedRoute.protectRoleby('authorityAdmin'),
-        userController.updateUser
+        portofolioController.updatePortofolio
     )
+    .get(portofolioController.getDetailsPortofolio)
     .delete(
         protectedRoute.protected,
         protectedRoute.protectRoleby('authorityAdmin'),
-        userController.deleteUser
+        portofolioController.deletePortofolio
     );
 
 module.exports = router;

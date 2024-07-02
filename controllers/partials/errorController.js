@@ -1,5 +1,5 @@
 // middlewares/globalErrorHandler.js
-const AppError = require('./../utils/appError');
+const AppError = require('../../utils/appError');
 
 // Handle invalid ID
 const handleCastError = (error) => {
@@ -18,6 +18,14 @@ const handleValidationError = (error) => {
     const errors = Object.values(error.errors).map((el) => el.message);
     const message = `invalid input data. ${errors.join('. ')}`;
     return new AppError(message, 400);
+};
+
+// Handle Jwt Error
+const handleJWTError = () => {
+    return new AppError('Invalid token. Please log in again!', 401);
+};
+const handleJWTExpiredError = () => {
+    return new AppError('Your token has expired! Please log in again.', 401);
 };
 
 // Handle development errors
@@ -61,6 +69,8 @@ module.exports = (err, req, res, next) => {
         if (error.code === 11000) error = handleDuplicateField(error);
         if (error.name === 'ValidationError')
             error = handleValidationError(error);
+        if (error.name === 'JsonWebTokenError') error = handleJWTError();
+        if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
 
         sendErrorProd(error, res);
     }
