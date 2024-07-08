@@ -11,7 +11,7 @@ exports.getPortofolio = catchAsync(async (req, res) => {
         status: 'Succesfully !!',
         time: req.requestTime,
         result: data.length,
-        data: { data },
+        data,
     });
 });
 
@@ -27,7 +27,7 @@ exports.getDetailsPortofolio = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
         status: 'Succesfully !!',
-        data: data,
+        data,
     });
 });
 
@@ -36,9 +36,7 @@ exports.createPortofolio = catchAsync(async (req, res) => {
 
     res.status(201).json({
         status: 'Success Created Data !!',
-        data: {
-            data,
-        },
+        data,
     });
 });
 
@@ -54,9 +52,7 @@ exports.updatePortofolio = catchAsync(async (req, res, next) => {
     }
     res.status(200).json({
         status: 'Success updated Data !!',
-        data: {
-            data,
-        },
+        data,
     });
 });
 
@@ -73,8 +69,6 @@ exports.deletePortofolio = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
         status: 'Success Deleted Data !!',
-        data: {
-            data,
-        },
+        data,
     });
 });
