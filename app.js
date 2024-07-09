@@ -15,7 +15,7 @@ const userRouter = require('./routes/userRoutes');
 const portofolioRouter = require('./routes/portofolioRoutes');
 
 // Load environment variables from config.env
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: './.env' });
 
 // Initialize Express app
 const app = express();
