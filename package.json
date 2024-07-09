@@ -6,7 +6,8 @@
     "scripts": {
         "dev": "cross-env NODE_ENV=dev nodemon server.js",
         "start": " cross-env NODE_ENV=prod nodemon server.js",
-        "debug": "ndb server.js"
+        "debug": "ndb server.js",
+        "build": " echo 'Running build process..."
     },
     "author": "imron",
     "license": "ISC",
