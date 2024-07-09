@@ -1,4 +1,4 @@
-const monggose = require('mongoose');
+const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 const app = require('./app');
@@ -7,19 +7,23 @@ const DB = process.env.DATABASE.replace(
     '<PASSWORD>',
     process.env.DATABASE_PASSWORD
 );
-monggose.connect(DB).then(() => {
-    console.log('db connected');
-});
 
-//  Server Start
-const port = process.env.PORT;
+mongoose
+    .connect(DB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        console.log('DB connection successful');
+    });
 
-app.listen(port, () => {
-    console.log(`app running on port ${port}`);
+const port = process.env.PORT || 3000;
+const server = app.listen(port, () => {
+    console.log(`App running on port ${port}`);
 });
 
 process.on('unhandledRejection', (err) => {
-    console.log('unhandledRejection');
+    console.log('UNHANDLED REJECTION! Shutting down...');
     console.log(err.name, err.message);
     server.close(() => {
         process.exit(1);
@@ -27,7 +31,7 @@ process.on('unhandledRejection', (err) => {
 });
 
 process.on('uncaughtException', (err) => {
-    console.log('uncaughtException');
+    console.log('UNCAUGHT EXCEPTION! Shutting down...');
     console.log(err.name, err.message);
     server.close(() => {
         process.exit(1);
